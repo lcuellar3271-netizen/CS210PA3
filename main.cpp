@@ -142,10 +142,10 @@ bool dfs(
     for (int i = 0; i < 4; i++) {
         int new_r = row + dr[i];
         int new_c = col + dc[i];
+        parent_r[new_r][new_c] = row;
+        parent_c[new_r][new_c] = col;
         bool neighbor = dfs(new_r, new_c, maze, visited, parent_r, parent_c, exit_r, exit_c);
         if (neighbor) {
-            parent_r[new_r][new_c] = row;
-            parent_c[new_r][new_c] = col;
             return true;
         }
     }
