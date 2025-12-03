@@ -118,16 +118,37 @@ void printPath(pair<int,int> exitcell,
 // Add arguments, return type, and logic
 // ----------------------------------------------------------
 bool dfs(
-    int ent_r,
-    int ent_c,
-    vector<vector<int>>& maze,
-    const vector<vector<bool>>& visited,
-    const vector<vector<int>>& parent_r,
-    const vector<vector<int>>& parent_c,
+    int row,
+    int col,
+    const vector<vector<int>>& maze,
+    vector<vector<bool>>& visited,
+    vector<vector<int>>& parent_r,
+    vector<vector<int>>& parent_c,
     int exit_r,
     int exit_c
 ) {
+    if (row < 0 || row >= maze.size() || col < 0 || col >= maze[row].size()) {
+        return false;
+    }
+    if (maze[row][col] == 1 || visited[row][col]) {
+        return false;
+    }
+    if (row == exit_r && col == exit_c) {
+        return true;
+    }
 
+    visited[row][col] = true;
+
+    for (int i = 0; i < 4; i++) {
+        int new_r = row + dr[i];
+        int new_c = col + dc[i];
+        bool neighbor = dfs(new_r, new_c, maze, visited, parent_r, parent_c, exit_r, exit_c);
+        if (neighbor) {
+            parent_r[new_r][new_c] = row;
+            parent_c[new_r][new_c] = col;
+            return true;
+        }
+    }
 
     return false;
 }
